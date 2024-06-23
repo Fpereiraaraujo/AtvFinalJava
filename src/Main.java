@@ -123,10 +123,9 @@ public class Main {
 
     private static void gerarRelatoriosEstatisticas() {
         RelatoriosEstatisticas relatorios = new RelatoriosEstatisticas(
-            gerenciadorBarbearia.clientes,
-            gerenciadorBarbearia.servicos,
-            gerenciadorAgendamentos.agendamentos
-        );
+                gerenciadorBarbearia.clientes,
+                gerenciadorBarbearia.servicos,
+                gerenciadorAgendamentos.agendamentos);
         System.out.println("=== Relatórios e Estatísticas ===");
         System.out.println("1. Relatório de Clientes");
         System.out.println("2. Relatório de Serviços");

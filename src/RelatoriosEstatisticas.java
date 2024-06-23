@@ -56,7 +56,8 @@ public class RelatoriosEstatisticas {
 
         // Estatísticas sobre serviços dos clientes
         Map<String, Long> servicosPorCliente = agendamentos.stream()
-            .collect(Collectors.groupingBy(agendamento -> agendamento.getCliente().getNome(), Collectors.counting()));
+                .collect(Collectors.groupingBy(agendamento -> agendamento.getCliente().getNome(),
+                        Collectors.counting()));
         servicosPorCliente.forEach((cliente, quantidade) -> {
             System.out.println(cliente + " realizou " + quantidade + " agendamentos.");
         });
@@ -69,7 +70,8 @@ public class RelatoriosEstatisticas {
 
         // Estatísticas sobre popularidade dos serviços
         Map<String, Long> popularidadeServicos = agendamentos.stream()
-            .collect(Collectors.groupingBy(agendamento -> agendamento.getServico().getNome(), Collectors.counting()));
+                .collect(Collectors.groupingBy(agendamento -> agendamento.getServico().getNome(),
+                        Collectors.counting()));
         popularidadeServicos.forEach((servico, quantidade) -> {
             System.out.println("Serviço " + servico + " foi agendado " + quantidade + " vezes.");
         });
@@ -82,14 +84,16 @@ public class RelatoriosEstatisticas {
 
         // Estatísticas por cliente
         Map<String, Long> agendamentosPorCliente = agendamentos.stream()
-            .collect(Collectors.groupingBy(agendamento -> agendamento.getCliente().getNome(), Collectors.counting()));
+                .collect(Collectors.groupingBy(agendamento -> agendamento.getCliente().getNome(),
+                        Collectors.counting()));
         agendamentosPorCliente.forEach((cliente, quantidade) -> {
             System.out.println("Cliente " + cliente + " tem " + quantidade + " agendamentos.");
         });
 
         // Estatísticas por serviço
         Map<String, Long> agendamentosPorServico = agendamentos.stream()
-            .collect(Collectors.groupingBy(agendamento -> agendamento.getServico().getNome(), Collectors.counting()));
+                .collect(Collectors.groupingBy(agendamento -> agendamento.getServico().getNome(),
+                        Collectors.counting()));
         agendamentosPorServico.forEach((servico, quantidade) -> {
             System.out.println("Serviço " + servico + " foi agendado " + quantidade + " vezes.");
         });

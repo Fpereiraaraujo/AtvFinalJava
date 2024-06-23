@@ -86,7 +86,7 @@ public class GerenciadorBarbearia {
     // Método para salvar dados em um arquivo
     public void salvarDados(String arquivoClientes, String arquivoServicos) {
         try (ObjectOutputStream oosClientes = new ObjectOutputStream(new FileOutputStream(arquivoClientes));
-             ObjectOutputStream oosServicos = new ObjectOutputStream(new FileOutputStream(arquivoServicos))) {
+                ObjectOutputStream oosServicos = new ObjectOutputStream(new FileOutputStream(arquivoServicos))) {
             oosClientes.writeObject(clientes);
             oosServicos.writeObject(servicos);
             System.out.println("Dados salvos com sucesso.");
@@ -99,7 +99,7 @@ public class GerenciadorBarbearia {
     @SuppressWarnings("unchecked")
     public void carregarDados(String arquivoClientes, String arquivoServicos) {
         try (ObjectInputStream oisClientes = new ObjectInputStream(new FileInputStream(arquivoClientes));
-             ObjectInputStream oisServicos = new ObjectInputStream(new FileInputStream(arquivoServicos))) {
+                ObjectInputStream oisServicos = new ObjectInputStream(new FileInputStream(arquivoServicos))) {
             clientes = (List<Cliente>) oisClientes.readObject();
             servicos = (List<Servico>) oisServicos.readObject();
             System.out.println("Dados carregados com sucesso.");

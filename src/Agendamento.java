@@ -9,7 +9,8 @@ public class Agendamento implements Serializable {
     private LocalDateTime dataHora;
 
     // Construtor padrão
-    public Agendamento() {}
+    public Agendamento() {
+    }
 
     // Construtor com parâmetros
     public Agendamento(Cliente cliente, Servico servico, LocalDateTime dataHora) {

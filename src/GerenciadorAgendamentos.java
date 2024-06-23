@@ -18,7 +18,8 @@ public class GerenciadorAgendamentos {
         }
 
         if (conflitoDeHorario(cliente, dataHora, servico.getDuracao())) {
-            System.out.println("Conflito de horário detectado para o cliente " + cliente.getNome() + " no horário " + dataHora);
+            System.out.println(
+                    "Conflito de horário detectado para o cliente " + cliente.getNome() + " no horário " + dataHora);
             return;
         }
 
@@ -85,4 +86,3 @@ public class GerenciadorAgendamentos {
         }
     }
 }
-
