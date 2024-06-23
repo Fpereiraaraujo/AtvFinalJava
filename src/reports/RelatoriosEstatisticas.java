@@ -1,6 +1,11 @@
+package reports;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import model.Agendamento;
+import model.Cliente;
+import model.Servico;
 
 public class RelatoriosEstatisticas {
     private List<Cliente> clientes;

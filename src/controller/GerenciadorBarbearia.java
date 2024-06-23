@@ -1,6 +1,14 @@
+package controller;
+
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.Agendamento;
+import model.Cliente;
+import model.Servico;
 
 public class GerenciadorBarbearia {
     private List<Cliente> clientes;
@@ -73,6 +81,16 @@ public class GerenciadorBarbearia {
         return null;
     }
 
+    public void cancelarAgendamento(Agendamento agendamento, LocalDateTime cancelamentoSolicitado) {
+        long hoursDifference = ChronoUnit.HOURS.between(cancelamentoSolicitado, agendamento.getDataHora());
+        if (hoursDifference >= 24) {
+            System.out.println("Cancelamento sem custo.");
+        } else {
+            double taxaCancelamento = agendamento.getServico().getPreco() * 0.5;
+            System.out.println("Cancelamento com taxa de: R$" + taxaCancelamento);
+        }
+    }
+
     // Método para obter a lista de clientes
     public List<Cliente> getClientes() {
         return clientes;
@@ -95,8 +113,11 @@ public class GerenciadorBarbearia {
 
     // Método para salvar dados em um arquivo
     public void salvarDados(String arquivoClientes, String arquivoServicos) {
-        try (ObjectOutputStream oosClientes = new ObjectOutputStream(new FileOutputStream(arquivoClientes));
-             ObjectOutputStream oosServicos = new ObjectOutputStream(new FileOutputStream(arquivoServicos))) {
+
+        String caminhoBase = "C:\\Users\\kinha\\OneDrive\\Área de Trabalho\\A1 desenvolvimento de software\\AtvFinalJava\\src\\resources\\";
+
+        try (ObjectOutputStream oosClientes = new ObjectOutputStream(new FileOutputStream(caminhoBase + arquivoClientes));
+             ObjectOutputStream oosServicos = new ObjectOutputStream(new FileOutputStream(caminhoBase + arquivoServicos))) {
             oosClientes.writeObject(clientes);
             oosServicos.writeObject(servicos);
             System.out.println("\nDados salvos com sucesso.");

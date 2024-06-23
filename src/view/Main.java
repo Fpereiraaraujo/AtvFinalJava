@@ -1,6 +1,14 @@
+package view;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+import controller.GerenciadorAgendamentos;
+import controller.GerenciadorBarbearia;
+import model.Agendamento;
+import model.Cliente;
+import model.Servico;
+import reports.RelatoriosEstatisticas;
 
 public class Main {
     private static GerenciadorBarbearia gerenciadorBarbearia = new GerenciadorBarbearia();
@@ -8,6 +16,14 @@ public class Main {
     private static RelatoriosEstatisticas relatorios;
 
     public static void main(String[] args) {
+
+        // Exemplo: Cadastrando alguns serviços e clientes iniciais
+        gerenciadorBarbearia.cadastrarServico("Corte Masculino", "Corte de cabelo para homens", 30, 50.0);
+        gerenciadorBarbearia.cadastrarServico("Corte Feminino", "Corte de cabelo para mulheres", 45, 80.0);
+        gerenciadorBarbearia.cadastrarCliente("Maria Silva", "99999-1234", "maria@gmail.com");
+        gerenciadorBarbearia.cadastrarCliente("Joao Oliveira", "98888-5678", "joao@gmail.com");
+
+
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -16,13 +32,14 @@ public class Main {
             System.out.println("1. Cadastrar Cliente");
             System.out.println("2. Cadastrar Servico");
             System.out.println("3. Criar Agendamento");
-            System.out.println("4. Listar Clientes");
-            System.out.println("5. Listar Servicos");
-            System.out.println("6. Listar Agendamentos");
-            System.out.println("7. Gerar Relatorios");
-            System.out.println("8. Gerar Estatisticas");
-            System.out.println("9. Salvar Dados");
-            System.out.println("10. Carregar Dados");
+            System.out.println("4. Cancelar Agendamento");
+            System.out.println("5. Listar Clientes");
+            System.out.println("6. Listar Servicos");
+            System.out.println("7. Listar Agendamentos");
+            System.out.println("8. Gerar Relatorios");
+            System.out.println("9. Gerar Estatisticas");
+            System.out.println("10. Salvar Dados");
+            System.out.println("11. Carregar Dados");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
             int opcao = scanner.nextInt();
@@ -39,24 +56,27 @@ public class Main {
                     criarAgendamento(scanner);
                     break;
                 case 4:
-                    gerenciadorBarbearia.listarClientes();
+                    cancelarAgendamento(scanner);
                     break;
                 case 5:
-                    gerenciadorBarbearia.listarServicos();
+                    gerenciadorBarbearia.listarClientes();
                     break;
                 case 6:
-                    gerenciadorAgendamentos.listarAgendamentos();
+                    gerenciadorBarbearia.listarServicos();
                     break;
                 case 7:
-                    gerarRelatorios(scanner);
+                    gerenciadorAgendamentos.listarAgendamentos();
                     break;
                 case 8:
-                    gerarEstatisticas(scanner);
+                    gerarRelatorios(scanner);
                     break;
                 case 9:
-                    salvarDados(scanner);
+                    gerarEstatisticas(scanner);
                     break;
                 case 10:
+                    salvarDados(scanner);
+                    break;
+                case 11:
                     carregarDados(scanner);
                     break;
                 case 0:
@@ -92,23 +112,46 @@ public class Main {
     }
 
     private static void criarAgendamento(Scanner scanner) {
+        System.out.println("Clientes:");
         gerenciadorBarbearia.listarClientes();
-        System.out.print("\nEscolha o numero do cliente: ");
+        System.out.print("Escolha o cliente pelo numero: ");
         int numeroCliente = scanner.nextInt();
-        Cliente cliente = gerenciadorBarbearia.getCliente(numeroCliente);
+        scanner.nextLine(); // Consumir a quebra de linha pendente
 
+        System.out.println("Servicos:");
         gerenciadorBarbearia.listarServicos();
-        System.out.print("\nEscolha o numero do servico: ");
+        System.out.print("Escolha o servico pelo numero: ");
         int numeroServico = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha pendente
+
+        Cliente cliente = gerenciadorBarbearia.getCliente(numeroCliente);
         Servico servico = gerenciadorBarbearia.getServico(numeroServico);
 
-        scanner.nextLine();  // Consume the newline
-        System.out.print("\nData e Hora (dd/MM/yyyy HH:mm): ");
-        String dataHoraStr = scanner.nextLine();
-        LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-
-        gerenciadorAgendamentos.criarAgendamento(cliente, servico, dataHora);
+        if (cliente != null && servico != null) {
+            LocalDateTime dataHora = LocalDateTime.now().plusDays(1); // Exemplo de agendamento para o dia seguinte
+            gerenciadorAgendamentos.criarAgendamento(cliente, servico, dataHora);
+            System.out.println("\nAgendamento criado para " + cliente.getNome() + " - Servico: " + servico.getNome() + " em " + dataHora);
+        } else {
+            System.out.println("Cliente ou servico nao encontrado.");
+        }
     }
+
+
+    private static void cancelarAgendamento(Scanner scanner) {
+        gerenciadorAgendamentos.listarAgendamentos();
+        System.out.print("Escolha o agendamento pelo número: ");
+        int numeroAgendamento = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha pendente
+
+        if (numeroAgendamento >= 0 && numeroAgendamento < gerenciadorAgendamentos.agendamentos.size()) {
+            Agendamento agendamento = gerenciadorAgendamentos.agendamentos.get(numeroAgendamento);
+            gerenciadorBarbearia.cancelarAgendamento(agendamento, LocalDateTime.now());
+            gerenciadorAgendamentos.cancelarAgendamento(agendamento);
+        } else {
+            System.out.println("Agendamento nao encontrado.");
+        }
+    }
+
 
     private static void gerarRelatorios(Scanner scanner) {
         if (relatorios == null) {
@@ -122,7 +165,7 @@ public class Main {
         System.out.println("1. Relatorio de Clientes");
         System.out.println("2. Relatorio de Servicos");
         System.out.println("3. Relatorio de Agendamentos");
-        System.out.print("Escolha uma opção: ");
+        System.out.print("Escolha uma opcao: ");
         int opcao = scanner.nextInt();
         scanner.nextLine();  // Consume the newline
 

@@ -1,10 +1,16 @@
+package controller;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Agendamento;
+import model.Cliente;
+import model.Servico;
+
 public class GerenciadorAgendamentos {
-    private List<Agendamento> agendamentos;
+    public List<Agendamento> agendamentos;
 
     public GerenciadorAgendamentos() {
         this.agendamentos = new ArrayList<>();
@@ -38,6 +44,12 @@ public class GerenciadorAgendamentos {
                 System.out.println(agendamento);
             }
         }
+    }
+
+    //metodo responsavel por cancelar agendamento
+    public void cancelarAgendamento(Agendamento agendamento) {
+        agendamentos.remove(agendamento);
+        System.out.println("Agendamento cancelado.");
     }
 
     // Método para remover um agendamento
