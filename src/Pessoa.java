@@ -1,8 +1,7 @@
 public abstract class Pessoa {
     protected String nome;
 
-    public Pessoa() {
-    }
+    public Pessoa() {}
 
     public Pessoa(String nome) {
         this.nome = nome;

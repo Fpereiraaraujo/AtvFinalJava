@@ -13,89 +13,59 @@ public class RelatoriosEstatisticas {
         this.agendamentos = agendamentos;
     }
 
-    // Relatório de clientes
     public void gerarRelatorioClientes() {
-        if (clientes.isEmpty()) {
-            System.out.println("Nenhum cliente cadastrado.");
-        } else {
-            System.out.println("Relatório de Clientes:");
-            for (Cliente cliente : clientes) {
-                System.out.println(cliente);
-            }
+        System.out.println("\nRelatório de Clientes:");
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente);
         }
     }
 
-    // Relatório de serviços
     public void gerarRelatorioServicos() {
-        if (servicos.isEmpty()) {
-            System.out.println("Nenhum serviço cadastrado.");
-        } else {
-            System.out.println("Relatório de Serviços:");
-            for (Servico servico : servicos) {
-                System.out.println(servico);
-            }
+        System.out.println("\nRelatório de Serviços:");
+        for (Servico servico : servicos) {
+            System.out.println(servico);
         }
     }
 
-    // Relatório de agendamentos
     public void gerarRelatorioAgendamentos() {
-        if (agendamentos.isEmpty()) {
-            System.out.println("Nenhum agendamento cadastrado.");
-        } else {
-            System.out.println("Relatório de Agendamentos:");
-            for (Agendamento agendamento : agendamentos) {
-                System.out.println(agendamento);
-            }
+        System.out.println("\nRelatório de Agendamentos:");
+        for (Agendamento agendamento : agendamentos) {
+            System.out.println(agendamento);
         }
     }
 
-    // Estatísticas de clientes
     public void gerarEstatisticasClientes() {
         System.out.println("Estatísticas de Clientes:");
-        System.out.println("Total de clientes: " + clientes.size());
+        System.out.println("\nTotal de clientes: " + clientes.size() + "\n");
 
-        // Estatísticas sobre serviços dos clientes
-        Map<String, Long> servicosPorCliente = agendamentos.stream()
-                .collect(Collectors.groupingBy(agendamento -> agendamento.getCliente().getNome(),
-                        Collectors.counting()));
-        servicosPorCliente.forEach((cliente, quantidade) -> {
-            System.out.println(cliente + " realizou " + quantidade + " agendamentos.");
-        });
+        // Contagem de clientes por email (ou qualquer outra lógica necessária)
+        Map<String, Long> clientesPorEmail = clientes.stream()
+            .collect(Collectors.groupingBy(Cliente::getEmail, Collectors.counting()));
+        System.out.println("\nClientes por email: " + clientesPorEmail + "\n");
     }
 
-    // Estatísticas de serviços
     public void gerarEstatisticasServicos() {
         System.out.println("Estatísticas de Serviços:");
-        System.out.println("Total de serviços: " + servicos.size());
+        System.out.println("\nTotal de serviços: " + servicos.size() + "\n");
 
-        // Estatísticas sobre popularidade dos serviços
-        Map<String, Long> popularidadeServicos = agendamentos.stream()
-                .collect(Collectors.groupingBy(agendamento -> agendamento.getServico().getNome(),
-                        Collectors.counting()));
-        popularidadeServicos.forEach((servico, quantidade) -> {
-            System.out.println("Serviço " + servico + " foi agendado " + quantidade + " vezes.");
-        });
+        // Contagem de serviços por nome (ou qualquer outra lógica necessária)
+        Map<String, Long> servicosPorNome = servicos.stream()
+            .collect(Collectors.groupingBy(Servico::getNome, Collectors.counting()));
+        System.out.println("\nServiços por nome: " + servicosPorNome + "\n");
     }
 
-    // Estatísticas de agendamentos
     public void gerarEstatisticasAgendamentos() {
         System.out.println("Estatísticas de Agendamentos:");
-        System.out.println("Total de agendamentos: " + agendamentos.size());
+        System.out.println("\nTotal de agendamentos: " + agendamentos.size() + "\n");
 
-        // Estatísticas por cliente
-        Map<String, Long> agendamentosPorCliente = agendamentos.stream()
-                .collect(Collectors.groupingBy(agendamento -> agendamento.getCliente().getNome(),
-                        Collectors.counting()));
-        agendamentosPorCliente.forEach((cliente, quantidade) -> {
-            System.out.println("Cliente " + cliente + " tem " + quantidade + " agendamentos.");
-        });
-
-        // Estatísticas por serviço
+        // Contagem de agendamentos por serviço
         Map<String, Long> agendamentosPorServico = agendamentos.stream()
-                .collect(Collectors.groupingBy(agendamento -> agendamento.getServico().getNome(),
-                        Collectors.counting()));
-        agendamentosPorServico.forEach((servico, quantidade) -> {
-            System.out.println("Serviço " + servico + " foi agendado " + quantidade + " vezes.");
-        });
+            .collect(Collectors.groupingBy(a -> a.getServico().getNome(), Collectors.counting()));
+        System.out.println("\nAgendamentos por serviço: " + agendamentosPorServico + "\n");
+
+        // Contagem de agendamentos por cliente
+        Map<String, Long> agendamentosPorCliente = agendamentos.stream()
+            .collect(Collectors.groupingBy(a -> a.getCliente().getNome(), Collectors.counting()));
+        System.out.println("\nAgendamentos por cliente: " + agendamentosPorCliente + "\n");
     }
 }
