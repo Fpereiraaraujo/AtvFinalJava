@@ -1,3 +1,4 @@
+package model;
 import java.io.Serializable;
 
 public class Servico implements Serializable {
@@ -51,11 +52,9 @@ public class Servico implements Serializable {
 
     @Override
     public String toString() {
-        return "Servico{" +
-                "nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", duracao=" + duracao +
-                ", preco=" + preco +
-                '}';
+        return  "\nNome: " + nome +
+                "\nDescricao: " + descricao +
+                "\nDuracao: " + duracao +
+                "\nPreco: " + preco;
     }
 }

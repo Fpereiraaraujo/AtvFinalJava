@@ -1,11 +1,16 @@
+package controller;
+
 import java.io.*;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Agendamento;
+import model.Cliente;
+import model.Servico;
+
 public class GerenciadorAgendamentos {
-    List<Agendamento> agendamentos;
+    public List<Agendamento> agendamentos;
 
     public GerenciadorAgendamentos() {
         this.agendamentos = new ArrayList<>();
@@ -14,13 +19,12 @@ public class GerenciadorAgendamentos {
     // Método para criar um agendamento
     public void criarAgendamento(Cliente cliente, Servico servico, LocalDateTime dataHora) {
         if (cliente == null || servico == null || dataHora == null) {
-            System.out.println("Cliente, serviço ou data/hora inválidos.");
+            System.out.println("Cliente, servico ou data/hora invalidos.");
             return;
         }
 
         if (conflitoDeHorario(cliente, dataHora, servico.getDuracao())) {
-            System.out.println(
-                    "Conflito de horário detectado para o cliente " + cliente.getNome() + " no horário " + dataHora);
+            System.out.println("Conflito de horario detectado para o cliente " + cliente.getNome() + " no horario " + dataHora);
             return;
         }
 
@@ -42,20 +46,18 @@ public class GerenciadorAgendamentos {
         }
     }
 
-
     //metodo responsavel por cancelar agendamento
     public void cancelarAgendamento(Agendamento agendamento) {
         agendamentos.remove(agendamento);
         System.out.println("Agendamento cancelado.");
     }
 
-
     // Método para remover um agendamento
     public void removerAgendamento(Agendamento agendamento) {
         if (agendamentos.remove(agendamento)) {
             System.out.println("Agendamento removido com sucesso: " + agendamento);
         } else {
-            System.out.println("Agendamento não encontrado.");
+            System.out.println("Agendamento nao encontrado.");
         }
     }
 
@@ -93,5 +95,10 @@ public class GerenciadorAgendamentos {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Erro ao carregar agendamentos: " + e.getMessage());
         }
+    }
+
+    // Método para obter a lista de agendamentos
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
     }
 }

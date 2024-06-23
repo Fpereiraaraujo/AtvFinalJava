@@ -1,23 +1,19 @@
+package model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Agendamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
-    
-
     private Cliente cliente;
     private Servico servico;
     private LocalDateTime dataHora;
 
     // Construtor padrão
-    public Agendamento() {
-    }
+    public Agendamento() {}
 
     // Construtor com parâmetros
     public Agendamento(Cliente cliente, Servico servico, LocalDateTime dataHora) {
-        if (dataHora.isBefore(LocalDateTime.now())) throw new IllegalArgumentException("Data/hora inválida");
         this.cliente = cliente;
         this.servico = servico;
         this.dataHora = dataHora;
@@ -51,10 +47,8 @@ public class Agendamento implements Serializable {
     // Método para imprimir detalhes do agendamento
     @Override
     public String toString() {
-        return "Agendamento{" +
-                "cliente=" + cliente.getNome() +
-                ", servico=" + servico.getNome() +
-                ", dataHora=" + dataHora +
-                '}';
+        return  "\nCliente: " + cliente.getNome() +
+                "\nServico: " + servico.getNome() +
+                "\nData/Hora: " + dataHora;
     }
 }

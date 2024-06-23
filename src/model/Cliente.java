@@ -1,3 +1,4 @@
+package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,16 +70,9 @@ public class Cliente extends Pessoa implements Serializable {
     // Método para imprimir detalhes do cliente
     @Override
     public String toString() {
-        return "Cliente{" +
-                "nome='" + getNome() + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", email='" + email + '\'' +
-                ", historicoServicos=" + historicoServicos +
-                '}';
-    }
-
-    public void setDespesaTotal(double d) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDespesaTotal'");
+        return  "\nNome: " + getNome() + 
+                "\nTelefone: " + telefone +
+                "\nEmail: " + email +
+                "\nHistorico de servicos: " + historicoServicos;
     }
 }
