@@ -1,4 +1,8 @@
-public class Servico {
+import java.io.Serializable;
+
+public class Servico implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String nome;
     private String descricao;
     private int duracao; // em minutos

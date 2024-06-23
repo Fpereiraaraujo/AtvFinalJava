@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente extends Pessoa {
+public class Cliente extends Pessoa implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String telefone;
     private String email;
     private List<Servico> historicoServicos;
