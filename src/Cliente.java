@@ -76,4 +76,9 @@ public class Cliente extends Pessoa implements Serializable {
                 ", historicoServicos=" + historicoServicos +
                 '}';
     }
+
+    public void setDespesaTotal(double d) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDespesaTotal'");
+    }
 }

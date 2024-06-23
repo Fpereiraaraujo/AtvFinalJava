@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 public class Agendamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
+
+    
+
     private Cliente cliente;
     private Servico servico;
     private LocalDateTime dataHora;
@@ -14,6 +17,7 @@ public class Agendamento implements Serializable {
 
     // Construtor com parâmetros
     public Agendamento(Cliente cliente, Servico servico, LocalDateTime dataHora) {
+        if (dataHora.isBefore(LocalDateTime.now())) throw new IllegalArgumentException("Data/hora inválida");
         this.cliente = cliente;
         this.servico = servico;
         this.dataHora = dataHora;

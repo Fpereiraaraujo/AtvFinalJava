@@ -1,5 +1,6 @@
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,14 @@ public class GerenciadorAgendamentos {
             }
         }
     }
+
+
+    //metodo responsavel por cancelar agendamento
+    public void cancelarAgendamento(Agendamento agendamento) {
+        agendamentos.remove(agendamento);
+        System.out.println("Agendamento cancelado.");
+    }
+
 
     // Método para remover um agendamento
     public void removerAgendamento(Agendamento agendamento) {

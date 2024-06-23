@@ -1,8 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.Scanner;
-import java.util.List;
 
-@SuppressWarnings("unused")
 public class Main {
 
     private static GerenciadorBarbearia gerenciadorBarbearia = new GerenciadorBarbearia();
@@ -26,9 +24,7 @@ public class Main {
             System.out.println("4. Listar Clientes");
             System.out.println("5. Listar Serviços");
             System.out.println("6. Listar Agendamentos");
-            System.out.println("7. Gerar Relatórios e Estatísticas");
-            System.out.println("8. Salvar Dados");
-            System.out.println("9. Carregar Dados");
+            System.out.println("7. Cancelar Agendamento");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
@@ -54,13 +50,7 @@ public class Main {
                     gerenciadorAgendamentos.listarAgendamentos();
                     break;
                 case 7:
-                    gerarRelatoriosEstatisticas();
-                    break;
-                case 8:
-                    salvarDados();
-                    break;
-                case 9:
-                    carregarDados();
+                    cancelarAgendamento(scanner);
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -100,11 +90,13 @@ public class Main {
     }
 
     private static void agendarNovoServico(Scanner scanner) {
+        System.out.println("Clientes:");
         gerenciadorBarbearia.listarClientes();
         System.out.print("Escolha o cliente pelo número: ");
         int numeroCliente = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha pendente
 
+        System.out.println("Serviços:");
         gerenciadorBarbearia.listarServicos();
         System.out.print("Escolha o serviço pelo número: ");
         int numeroServico = scanner.nextInt();
@@ -114,64 +106,26 @@ public class Main {
         Servico servico = gerenciadorBarbearia.getServico(numeroServico);
 
         if (cliente != null && servico != null) {
-            LocalDateTime dataHora = LocalDateTime.now(); // Poderia ser mais sofisticado na prática
+            LocalDateTime dataHora = LocalDateTime.now().plusDays(1); // Exemplo de agendamento para o dia seguinte
             gerenciadorAgendamentos.criarAgendamento(cliente, servico, dataHora);
+            System.out.println("Agendamento criado para " + cliente.getNome() + " - Serviço: " + servico.getNome() + " em " + dataHora);
         } else {
             System.out.println("Cliente ou serviço não encontrado.");
         }
     }
 
-    private static void gerarRelatoriosEstatisticas() {
-        RelatoriosEstatisticas relatorios = new RelatoriosEstatisticas(
-                gerenciadorBarbearia.clientes,
-                gerenciadorBarbearia.servicos,
-                gerenciadorAgendamentos.agendamentos);
-        System.out.println("=== Relatórios e Estatísticas ===");
-        System.out.println("1. Relatório de Clientes");
-        System.out.println("2. Relatório de Serviços");
-        System.out.println("3. Relatório de Agendamentos");
-        System.out.println("4. Estatísticas de Clientes");
-        System.out.println("5. Estatísticas de Serviços");
-        System.out.println("6. Estatísticas de Agendamentos");
-        System.out.print("Escolha uma opção: ");
-
-        @SuppressWarnings("resource")
-        Scanner scanner = new Scanner(System.in);
-        int opcao = scanner.nextInt();
+    private static void cancelarAgendamento(Scanner scanner) {
+        gerenciadorAgendamentos.listarAgendamentos();
+        System.out.print("Escolha o agendamento pelo número: ");
+        int numeroAgendamento = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha pendente
 
-        switch (opcao) {
-            case 1:
-                relatorios.gerarRelatorioClientes();
-                break;
-            case 2:
-                relatorios.gerarRelatorioServicos();
-                break;
-            case 3:
-                relatorios.gerarRelatorioAgendamentos();
-                break;
-            case 4:
-                relatorios.gerarEstatisticasClientes();
-                break;
-            case 5:
-                relatorios.gerarEstatisticasServicos();
-                break;
-            case 6:
-                relatorios.gerarEstatisticasAgendamentos();
-                break;
-            default:
-                System.out.println("Opção inválida.");
-                break;
+        if (numeroAgendamento >= 0 && numeroAgendamento < gerenciadorAgendamentos.agendamentos.size()) {
+            Agendamento agendamento = gerenciadorAgendamentos.agendamentos.get(numeroAgendamento);
+            gerenciadorBarbearia.cancelarAgendamento(agendamento, LocalDateTime.now());
+            gerenciadorAgendamentos.cancelarAgendamento(agendamento);
+        } else {
+            System.out.println("Agendamento não encontrado.");
         }
-    }
-
-    private static void salvarDados() {
-        gerenciadorBarbearia.salvarDados("clientes.dat", "servicos.dat");
-        gerenciadorAgendamentos.salvarAgendamentos("agendamentos.dat");
-    }
-
-    private static void carregarDados() {
-        gerenciadorBarbearia.carregarDados("clientes.dat", "servicos.dat");
-        gerenciadorAgendamentos.carregarAgendamentos("agendamentos.dat");
     }
 }
