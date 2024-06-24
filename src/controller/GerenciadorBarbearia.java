@@ -41,14 +41,14 @@ public class GerenciadorBarbearia {
         System.out.println("\nServico cadastrado com sucesso: " + servico + "\n");
     }
 
-    // Método para listar clientes
+    // Método para listar clientes com índice
     public void listarClientes() {
         if (clientes.isEmpty()) {
             System.out.println("\nNenhum cliente cadastrado.");
         } else {
             System.out.println("\nLista de Clientes:");
-            for (Cliente cliente : clientes) {
-                System.out.println(cliente);
+            for (int i = 0; i < clientes.size(); i++) {
+                System.out.println("[" + i + "] " + clientes.get(i));
             }
         }
     }
@@ -56,11 +56,12 @@ public class GerenciadorBarbearia {
     // Método para listar serviços
     public void listarServicos() {
         if (servicos.isEmpty()) {
-            System.out.println("\nNenhum servico cadastrado.");
+            System.out.println("\nNenhum serviço cadastrado.");
         } else {
-            System.out.println("\nLista de Servicos:");
-            for (Servico servico : servicos) {
-                System.out.println(servico);
+            System.out.println("\nLista de Serviços:");
+            
+            for (int i = 0; i < servicos.size(); i++) {
+                System.out.println("[" + i + "] " + servicos.get(i));
             }
         }
     }
@@ -116,8 +117,10 @@ public class GerenciadorBarbearia {
 
         String caminhoBase = "C:\\Users\\kinha\\OneDrive\\Área de Trabalho\\A1 desenvolvimento de software\\AtvFinalJava\\src\\resources\\";
 
-        try (ObjectOutputStream oosClientes = new ObjectOutputStream(new FileOutputStream(caminhoBase + arquivoClientes));
-             ObjectOutputStream oosServicos = new ObjectOutputStream(new FileOutputStream(caminhoBase + arquivoServicos))) {
+        try (ObjectOutputStream oosClientes = new ObjectOutputStream(
+                new FileOutputStream(caminhoBase + arquivoClientes));
+                ObjectOutputStream oosServicos = new ObjectOutputStream(
+                        new FileOutputStream(caminhoBase + arquivoServicos))) {
             oosClientes.writeObject(clientes);
             oosServicos.writeObject(servicos);
             System.out.println("\nDados salvos com sucesso.");
@@ -130,7 +133,7 @@ public class GerenciadorBarbearia {
     @SuppressWarnings("unchecked")
     public void carregarDados(String arquivoClientes, String arquivoServicos) {
         try (ObjectInputStream oisClientes = new ObjectInputStream(new FileInputStream(arquivoClientes));
-             ObjectInputStream oisServicos = new ObjectInputStream(new FileInputStream(arquivoServicos))) {
+                ObjectInputStream oisServicos = new ObjectInputStream(new FileInputStream(arquivoServicos))) {
             clientes = (List<Cliente>) oisClientes.readObject();
             servicos = (List<Servico>) oisServicos.readObject();
             System.out.println("\nDados carregados com sucesso.");
