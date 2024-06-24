@@ -133,9 +133,6 @@ Classe que representa um serviço oferecido pela barbearia.
 
 Sinta-se à vontade para contribuir com este projeto. Sugestões, correções e melhorias são bem-vindas.
 
-## Licença
+## GPT e Referências
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
-    
-
+O Chat GPT foi usado principalmente para tirar dúvidas pontuais e para geração das páginas HTML. Outras fontes de pesquisa incluem o site StackOverFlow para tirar dúvidas / resolver alguns problemas e a documentação.
