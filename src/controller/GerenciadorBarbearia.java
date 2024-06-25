@@ -115,12 +115,10 @@ public class GerenciadorBarbearia {
     // Método para salvar dados em um arquivo
     public void salvarDados(String arquivoClientes, String arquivoServicos) {
 
-        String caminhoBase = "C:\\Users\\kinha\\OneDrive\\Área de Trabalho\\A1 desenvolvimento de software\\AtvFinalJava\\src\\resources\\";
-
         try (ObjectOutputStream oosClientes = new ObjectOutputStream(
-                new FileOutputStream(caminhoBase + arquivoClientes));
+                new FileOutputStream(arquivoClientes));
                 ObjectOutputStream oosServicos = new ObjectOutputStream(
-                        new FileOutputStream(caminhoBase + arquivoServicos))) {
+                        new FileOutputStream(arquivoServicos))) {
             oosClientes.writeObject(clientes);
             oosServicos.writeObject(servicos);
             System.out.println("\nDados salvos com sucesso.");

@@ -135,4 +135,4 @@ Sinta-se à vontade para contribuir com este projeto. Sugestões, correções e 
 
 ## GPT e Referências
 
-O Chat GPT foi usado principalmente para tirar dúvidas pontuais e para geração do readme. Outras fontes de pesquisa incluem o site StackOverFlow para tirar dúvidas / resolver alguns problemas.
+O Chat GPT foi usado principalmente para tirar dúvidas e para geração do readme. Outras fontes de pesquisa incluem o site StackOverFlow para tirar dúvidas / resolver alguns problemas.
